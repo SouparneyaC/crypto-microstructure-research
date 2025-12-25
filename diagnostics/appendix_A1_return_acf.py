@@ -4,16 +4,12 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import acf
 from mpl_toolkits.mplot3d import Axes3D
 
-# -----------------------------
 # Configuration
-# -----------------------------
 DATA_DIR = "data/processed"
 ASSETS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "DOGEUSDT"]
 MAX_LAG = 50
 
-# -----------------------------
 # Load data and compute ACFs
-# -----------------------------
 acf_matrix = []
 
 for asset in ASSETS:
@@ -31,18 +27,14 @@ for asset in ASSETS:
 
 acf_matrix = np.array(acf_matrix)
 
-# -----------------------------
 # Create surface grid
-# -----------------------------
 lags = np.arange(1, MAX_LAG + 1)
 assets_idx = np.arange(len(ASSETS))
 
 X, Y = np.meshgrid(lags, assets_idx)
 Z = acf_matrix
 
-# -----------------------------
-# Plot (LinkedIn optimized)
-# -----------------------------
+# Plot
 plt.rcParams.update({
     "font.family": "Times New Roman",
     "font.size": 11,
@@ -59,9 +51,7 @@ surf = ax.plot_surface(
     alpha=0.95
 )
 
-# -----------------------------
 # Formatting
-# -----------------------------
 ax.set_xlabel("Lag (minutes)", labelpad=8)
 ax.set_ylabel("Asset", labelpad=8)
 ax.set_zlabel("Volatility Persistence", labelpad=6)
