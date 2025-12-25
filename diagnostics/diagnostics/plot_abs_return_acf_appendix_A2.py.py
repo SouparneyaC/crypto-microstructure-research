@@ -4,9 +4,7 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import acf
 import os
 
-# -----------------------------
 # Plot style (paper-ready)
-# -----------------------------
 plt.rcParams.update({
     "font.family": "Times New Roman",
     "font.size": 11,
@@ -17,9 +15,7 @@ plt.rcParams.update({
     "figure.dpi": 300,
 })
 
-# -----------------------------
 # Paths
-# -----------------------------
 DATA_DIR = "dataset"
 OUT_DIR = "figures"
 os.makedirs(OUT_DIR, exist_ok=True)
@@ -33,16 +29,12 @@ ASSETS = {
 
 MAX_LAG = 50
 
-# -----------------------------
 # Helper: mean ACF (lags 1..L)
-# -----------------------------
 def mean_acf(series, max_lag):
     acf_vals = acf(series, nlags=max_lag, fft=True)
     return np.mean(acf_vals[1:])  # exclude lag 0
 
-# -----------------------------
 # Compute statistics
-# -----------------------------
 mean_abs_acf = {}
 
 for asset, file in ASSETS.items():
@@ -54,9 +46,7 @@ for asset, file in ASSETS.items():
 
     mean_abs_acf[asset] = mean_acf(abs_returns, MAX_LAG)
 
-# -----------------------------
 # Plot (bar chart)
-# -----------------------------
 assets = list(mean_abs_acf.keys())
 values = [mean_abs_acf[a] for a in assets]
 
